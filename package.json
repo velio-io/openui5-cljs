@@ -1,0 +1,28 @@
+{
+  "name": "ui5-cljs",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@storybook/addon-essentials": "6.5.16",
+    "@storybook/builder-webpack5": "6.5.16",
+    "@storybook/manager-webpack5": "6.5.16",
+    "@storybook/react": "6.5.16",
+    "shadow-cljs": "2.28.6",
+    "webpack": "5"
+  },
+  "dependencies": {
+    "@ui5/webcomponents": "1.24.2",
+    "@ui5/webcomponents-fiori": "1.24.2",
+    "@ui5/webcomponents-icons": "1.24.3",
+    "@ui5/webcomponents-react": "1.28.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "scripts": {
+    "stories:watch": "shadow-cljs watch stories",
+    "storybook:dev": "start-storybook -p 6006",
+    "storybook:build": "build-storybook --docs",
+    "tests:watch": "shadow-cljs watch test",
+    "cleanup": "rm -rf target .shadow-cljs public/js out"
+  }
+}

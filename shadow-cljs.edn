@@ -1,0 +1,17 @@
+;; shadow-cljs configuration
+{:deps true
+
+ :dev-http
+ {8021 "out/test"}
+
+ :builds
+ {:stories
+  {:target     :npm-module
+   :ns-regexp  "-stories$"
+   :output-dir "public/js/stories"}
+
+  :test
+  {:target   :browser-test
+   :test-dir "out/test"}}}
+
+
