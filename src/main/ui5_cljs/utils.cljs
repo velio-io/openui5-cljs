@@ -42,7 +42,9 @@
 
 (defn uget [value key]
   (if (map? value)
-    (get value key)
+    (if (vector? key)
+      (get-in value key)
+      (get value key))
     (j/get value key)))
 
 
