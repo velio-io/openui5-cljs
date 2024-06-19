@@ -1,7 +1,8 @@
 (ns ui5-cljs.utils
   (:require
    [applied-science.js-interop :as j]
-   [reagent.core :as r]))
+   [reagent.core :as r]
+   [reagent.impl.util :as util]))
 
 
 (defn assoc-some
@@ -41,7 +42,9 @@
 
 (defn uget [value key]
   (if (map? value)
-    (get value key)
+    (if (vector? key)
+      (get-in value key)
+      (get value key))
     (j/get value key)))
 
 
@@ -53,3 +56,21 @@
               (reduced x)))
           nil
           coll))
+
+
+(defn extract-props [v]
+  (let [p (nth v 1 nil)]
+    (if (map? p) p)))
+
+
+(defn component-props
+  "Copy of the reagent/component-props function with small addition.
+   We wouldn't choose between cljs or js properties but will merge them together instead.
+   This is required to handle additional props passed to React.cloneElement function"
+  [component]
+  (let [props (j/get component :props)]
+    (if-some [argv (j/get props :argv)]
+      ;; we have to merge props provided by React.cloneElement, otherwise they will be thrown away
+      (merge (extract-props argv)
+             (util/shallow-obj-to-map props))
+      (util/shallow-obj-to-map props))))
